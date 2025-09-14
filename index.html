@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The Jewels Recreational Center - Your premier destination for fitness and recreation. State-of-the-art gym equipment, swimming pool, sports courts, and group fitness classes.">
+    <title>The Jewels Recreational Center - Gym & Recreation Facility</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #0066CC;
+            --light-blue: #4A90E2;
+            --dark-blue: #003D7A;
+            --accent-blue: #00A3FF;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --white: #FFFFFF;
+            --gray-light: #F5F5F5;
+            --gray-medium: #E0E0E0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--dark-blue);
+        }
+
+        h3 {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-blue);
+        }
+
+        p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            padding: 0.5rem 0;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 0;
+            transition: padding 0.3s ease;
+        }
+
+        header.scrolled nav {
+            padding: 0.8rem 0;
+        }
+
+        .logo {
+            height: 70px;
+            width: 70px;
+            object-fit: contain;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled .logo {
+            height: 55px;
+            width: 55px;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-blue);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary-blue);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-blue);
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 94px;
+            min-height: 90vh;
+            background: linear-gradient(135deg, rgba(0, 102, 204, 0.9), rgba(0, 163, 255, 0.8)),
+                        url('assets/images/hero-main.jpg') center/cover;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            color: var(--white);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards;
+            animation-delay: 0.3s;
+        }
+
+        .hero h1 {
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--white);
+            color: var(--primary-blue);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(0, 102, 204, 0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .btn-secondary:hover {
+            background: var(--white);
+            color: var(--primary-blue);
+        }
+
+        /* About Section - Fixed overlap */
+        .about {
+            padding: 80px 0;
+            background: var(--white);
+            position: relative;
+            z-index: 2;
+            margin-top: 0;
+        }
+
+        .about::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(to bottom, transparent, var(--white) 50%);
+            z-index: 1;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .about-content {
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+
+        .about-content.animate {
+            animation: slideInLeft 0.8s ease forwards;
+        }
+
+        .about-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            opacity: 0;
+            transform: translateX(50px);
+        }
+
+        .about-images.animate {
+            animation: slideInRight 0.8s ease forwards;
+            animation-delay: 0.2s;
+        }
+
+        .about-images img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .about-images img:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 10px 30px rgba(0, 102, 204, 0.2);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 80px 0;
+            background: var(--gray-light);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .service-card.animate {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 102, 204, 0.3);
+        }
+
+        .service-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .service-card-content {
+            padding: 1.5rem;
+        }
+
+        .service-card h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Programs Section */
+        .programs {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--white) 0%, rgba(74, 144, 226, 0.05) 100%);
+        }
+
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .program-item {
+            text-align: center;
+            padding: 2rem;
+            background: var(--white);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: scale(0.9);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .program-item.animate {
+            animation: scaleIn 0.5s ease forwards;
+        }
+
+        .program-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 102, 204, 0.15);
+        }
+
+        .program-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, var(--light-blue), var(--primary-blue));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--white);
+            transition: transform 0.3s ease;
+        }
+
+        .program-item:hover .program-icon {
+            transform: rotate(360deg) scale(1.1);
+        }
+
+        /* Booking Section */
+        .booking {
+            padding: 80px 0;
+            background: var(--white);
+        }
+
+        .booking-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--gray-light);
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .booking-form.animate {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--gray-medium);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-submit:hover::before {
+            left: 100%;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 102, 204, 0.3);
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .success-message {
+            position: fixed;
+            top: 120px;
+            right: -400px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: right 0.5s ease;
+            z-index: 2000;
+        }
+
+        .success-message.show {
+            right: 20px;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 80px 0;
+            background: var(--gray-light);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .contact-item {
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .contact-item.animate {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-item:hover .contact-icon {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--dark-blue), #001f3f);
+            color: var(--white);
+            padding: 40px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            color: var(--accent-blue);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-blue);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .footer-logo {
+            height: 50px;
+            width: 50px;
+            margin-bottom: 1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Counter animation */
+        .counter {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+
+        /* Scroll progress bar */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--accent-blue));
+            z-index: 10000;
+            transition: width 0.2s ease;
+        }
+
+        /* Loading state */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid var(--gray-medium);
+            border-top-color: var(--primary-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 94px;
+                right: -100%;
+                width: 100%;
+                height: calc(100vh - 94px);
+                background: var(--white);
+                flex-direction: column;
+                align-items: center;
+                justify-content: start;
+                padding-top: 3rem;
+                transition: right 0.3s ease;
+                box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-images {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .booking-form {
+                padding: 2rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .hero {
+                min-height: 70vh;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .btn {
+                padding: 12px 30px;
+                font-size: 0.9rem;
+            }
+
+            .programs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Loading Screen -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Success Message -->
+    <div class="success-message" id="successMessage">
+        <strong>Success!</strong><br>
+        Your booking request has been submitted successfully!
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+        <nav class="container">
+            <img src="assets/jewels-recreational.png" alt="The Jewels Recreational Center" class="logo" onclick="scrollToTop()">
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#programs" class="nav-link">Programs</a></li>
+                <li><a href="#booking" class="nav-link">Book Now</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Transform Your Life at The Jewels Recreational Center</h1>
+                <p>Experience the perfect blend of fitness excellence and recreational activities in our state-of-the-art facility. Your journey to a healthier, happier you starts here.</p>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <a href="#booking" class="btn">Start Your Journey</a>
+                    <a href="#services" class="btn btn-secondary">Explore Services</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <h2>Welcome to Excellence in Fitness & Recreation</h2>
+                    <p>The Jewels Recreational Center is more than just a gym – it's a comprehensive wellness destination where fitness meets fun. Our mission is to provide a welcoming, inclusive environment where every member of our community can achieve their health and wellness goals.</p>
+                    <p>With cutting-edge equipment, expert trainers, and diverse recreational facilities, we offer something for everyone. From intense workouts to relaxing swims, from competitive sports to family activities, we're here to support your journey to a healthier lifestyle.</p>
+                    <p>Join our vibrant community of <span class="counter" data-target="5000">0</span>+ members and discover why The Jewels Recreational Center is the premier choice for fitness and recreation in the area.</p>
+                </div>
+                <div class="about-images">
+                    <img src="assets/images/about-facility-exterior.jpg" alt="Facility Exterior" loading="lazy">
+                    <img src="assets/images/about-facility-interior.jpg" alt="Facility Interior" loading="lazy">
+                    <img src="assets/images/community-diverse-members.jpg" alt="Diverse Members" loading="lazy">
+                    <img src="assets/images/lifestyle-wellness.jpg" alt="Wellness Focus" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2 style="text-align: center;">Our Premium Services & Facilities</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <img src="assets/images/gym-cardio-zone.jpg" alt="Cardio Zone" loading="lazy">
+                    <div class="service-card-content">
+                        <h3>Cardio Zone</h3>
+                        <p>State-of-the-art treadmills, ellipticals, and bikes with personal entertainment systems. Track your progress and achieve your cardio goals.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <img src="assets/images/gym-weights-area.jpg" alt="Weight Training" loading="lazy">
+                    <div class="service-card-content">
+                        <h3>Strength Training</h3>
+                        <p>Complete range of free weights and resistance machines. Build strength and muscle with professional-grade equipment.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <img src="assets/images/gym-functional-training.jpg" alt="Functional Training" loading="lazy">
+                    <div class="service-card-content">
+                        <h3>Functional Training</h3>
+                        <p>Dedicated space for functional fitness with kettlebells, medicine balls, and TRX systems for dynamic workouts.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <img src="assets/images/recreation-pool.jpg" alt="Swimming Pool" loading="lazy">
+                    <div class="service-card-content">
+                        <h3>Swimming Pool</h3>
+                        <p>Olympic-size indoor pool perfect for lap swimming, water aerobics, and swimming lessons for all ages.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <img src="assets/images/recreation-basketball-court.jpg" alt="Sports Courts" loading="lazy">
+                    <div class="service-card-content">
+                        <h3>Sports Courts</h3>
+                        <p>Multi-purpose courts for basketball, volleyball, and badminton. Perfect for competitive games or casual play.</p>
+                    </div>
+                </div>
+                <div class="service-card">
+                    <img src="assets/images/recreation-group-fitness.jpg" alt="Group Fitness" loading="lazy">
+                    <div class="service-card-content">
+                        <h3>Group Fitness</h3>
+                        <p>Dynamic classes including yoga, pilates, Zumba, and HIIT. Expert instructors guide you through energizing workouts.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programs Section -->
+    <section class="programs" id="programs">
+        <div class="container">
+            <h2 style="text-align: center;">Specialized Programs</h2>
+            <div class="programs-grid">
+                <div class="program-item">
+                    <div class="program-icon">💪</div>
+                    <h3>Personal Training</h3>
+                    <p>One-on-one coaching tailored to your specific goals and fitness level.</p>
+                </div>
+                <div class="program-item">
+                    <div class="program-icon">👥</div>
+                    <h3>Group Classes</h3>
+                    <p>From yoga to high-intensity training, find the perfect class for you.</p>
+                </div>
+                <div class="program-item">
+                    <div class="program-icon">🏊</div>
+                    <h3>Swim Programs</h3>
+                    <p>Learn to swim or improve your technique with certified instructors.</p>
+                </div>
+                <div class="program-item">
+                    <div class="program-icon">👶</div>
+                    <h3>Youth Activities</h3>
+                    <p>Safe, fun programs designed to keep kids active and healthy.</p>
+                </div>
+                <div class="program-item">
+                    <div class="program-icon">👴</div>
+                    <h3>Senior Fitness</h3>
+                    <p>Gentle exercise programs designed for active aging and wellness.</p>
+                </div>
+                <div class="program-item">
+                    <div class="program-icon">🥗</div>
+                    <h3>Nutrition Coaching</h3>
+                    <p>Expert guidance on diet and nutrition to complement your fitness goals.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section class="booking" id="booking">
+        <div class="container">
+            <h2 style="text-align: center;">Book Your Visit</h2>
+            <p style="text-align: center; color: var(--text-light); max-width: 600px; margin: 0 auto 3rem;">Ready to start your fitness journey? Fill out the form below and we'll get back to you within 24 hours.</p>
+            
+            <form class="booking-form" id="bookingForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name *</label>
+                    <input type="text" id="fullName" name="fullName" required>
+                    <span class="error-message" id="nameError">Please enter your full name</span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" required>
+                    <span class="error-message" id="emailError">Please enter a valid email address</span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                    <span class="error-message" id="phoneError">Please enter a valid phone number</span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="service">Preferred Activity/Service *</label>
+                    <select id="service" name="service" required>
+                        <option value="">Select a service</option>
+                        <option value="gym-membership">Gym Membership</option>
+                        <option value="personal-training">Personal Training</option>
+                        <option value="group-classes">Group Classes</option>
+                        <option value="swimming">Swimming</option>
+                        <option value="sports-courts">Sports Courts</option>
+                        <option value="youth-programs">Youth Programs</option>
+                        <option value="senior-fitness">Senior Fitness</option>
+                        <option value="tour">Facility Tour</option>
+                    </select>
+                    <span class="error-message" id="serviceError">Please select a service</span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="date">Preferred Date *</label>
+                    <input type="date" id="date" name="date" required>
+                    <span class="error-message" id="dateError">Please select a date</span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="time">Preferred Time *</label>
+                    <select id="time" name="time" required>
+                        <option value="">Select a time</option>
+                        <option value="morning">Morning (6AM - 12PM)</option>
+                        <option value="afternoon">Afternoon (12PM - 5PM)</option>
+                        <option value="evening">Evening (5PM - 9PM)</option>
+                    </select>
+                    <span class="error-message" id="timeError">Please select a time</span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="notes">Additional Notes</label>
+                    <textarea id="notes" name="notes" placeholder="Tell us about your fitness goals or any special requirements..."></textarea>
+                </div>
+                
+                <button type="submit" class="btn-submit">Submit Booking Request</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 style="text-align: center;">Get In Touch</h2>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <div class="contact-icon">📍</div>
+                    <h3>Location</h3>
+                    <p>123 Fitness Avenue<br>Recreation District<br>Your City, ST 12345</p>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📞</div>
+                    <h3>Phone</h3>
+                    <p><a href="tel:+1234567890" style="color: var(--text-dark); text-decoration: none;">(123) 456-7890</a></p>
+                    <p>Mon-Fri: 6AM - 10PM<br>Weekends: 7AM - 9PM</p>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">✉️</div>
+                    <h3>Email</h3>
+                    <p><a href="mailto:info@jewelsrec.com" style="color: var(--text-dark); text-decoration: none;">info@jewelsrec.com</a></p>
+                    <p>We respond within 24 hours</p>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">🌐</div>
+                    <h3>Follow Us</h3>
+                    <p>Stay connected for updates, tips, and special offers</p>
+                    <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1rem;">
+                        <a href="#" style="color: var(--primary-blue); font-size: 1.5rem;">📘</a>
+                        <a href="#" style="color: var(--primary-blue); font-size: 1.5rem;">📷</a>
+                        <a href="#" style="color: var(--primary-blue); font-size: 1.5rem;">🐦</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <img src="assets/jewels-recreational.png" alt="The Jewels Recreational Center" class="footer-logo">
+                    <h4>The Jewels Recreational Center</h4>
+                    <p>Your premier destination for fitness and recreation. Building a healthier, stronger community together.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#programs">Programs</a></li>
+                        <li><a href="#booking">Membership</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#services">Gym Equipment</a></li>
+                        <li><a href="#services">Swimming Pool</a></li>
+                        <li><a href="#services">Sports Courts</a></li>
+                        <li><a href="#programs">Personal Training</a></li>
+                        <li><a href="#programs">Group Classes</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <ul>
+                        <li>📍 123 Fitness Avenue</li>
+                        <li>📞 (123) 456-7890</li>
+                        <li>✉️ info@jewelsrec.com</li>
+                        <li>🕐 Mon-Fri: 6AM-10PM</li>
+                        <li>🕐 Weekends: 7AM-9PM</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 The Jewels Recreational Center. All rights reserved. | Designed with 💙 for our community</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Navigation Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when link is clicked
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Smooth scroll to top
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Progress Bar
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            document.getElementById('progressBar').style.width = scrollPercent + '%';
+        });
+
+        // Header scroll effect
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            const currentScroll = window.pageYOffset;
+            
+            if (currentScroll > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+            
+            lastScroll = currentScroll;
+        });
+
+        // Active navigation highlighting
+        const sections = document.querySelectorAll('section');
+        const navItems = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href').slice(1) === current) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Form Validation
+        const bookingForm = document.getElementById('bookingForm');
+        
+        bookingForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Reset error messages
+            document.querySelectorAll('.error-message').forEach(error => {
+                error.style.display = 'none';
+            });
+            
+            let isValid = true;
+            
+            // Validate Full Name
+            const fullName = document.getElementById('fullName');
+            if (fullName.value.trim().length < 2) {
+                document.getElementById('nameError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate Email
+            const email = document.getElementById('email');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email.value)) {
+                document.getElementById('emailError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate Phone
+            const phone = document.getElementById('phone');
+            const phoneRegex = /^[\d\s\-\+\(\)]+$/;
+            if (!phoneRegex.test(phone.value) || phone.value.length < 10) {
+                document.getElementById('phoneError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate Service
+            const service = document.getElementById('service');
+            if (service.value === '') {
+                document.getElementById('serviceError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate Date
+            const date = document.getElementById('date');
+            const selectedDate = new Date(date.value);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            if (!date.value || selectedDate < today) {
+                document.getElementById('dateError').textContent = 'Please select a future date';
+                document.getElementById('dateError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate Time
+            const time = document.getElementById('time');
+            if (time.value === '') {
+                document.getElementById('timeError').style.display = 'block';
+                isValid = false;
+            }
+            
+            if (isValid) {
+                // Show success message
+                const successMsg = document.getElementById('successMessage');
+                successMsg.classList.add('show');
+                
+                setTimeout(() => {
+                    successMsg.classList.remove('show');
+                }, 5000);
+                
+                bookingForm.reset();
+            }
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                    
+                    // Stagger animations for grid items
+                    if (entry.target.classList.contains('service-card') || 
+                        entry.target.classList.contains('program-item') ||
+                        entry.target.classList.contains('contact-item')) {
+                        const siblings = entry.target.parentElement.children;
+                        Array.from(siblings).forEach((sibling, index) => {
+                            setTimeout(() => {
+                                sibling.classList.add('animate');
+                            }, index * 100);
+                        });
+                    }
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements
+        document.querySelectorAll('.about-content, .about-images, .service-card, .program-item, .contact-item, .booking-form').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Counter animation
+        const counters = document.querySelectorAll('.counter');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const target = parseInt(counter.getAttribute('data-target'));
+                    let current = 0;
+                    const increment = target / 100;
+                    
+                    const updateCounter = () => {
+                        current += increment;
+                        if (current < target) {
+                            counter.textContent = Math.ceil(current);
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            counter.textContent = target;
+                        }
+                    };
+                    
+                    updateCounter();
+                    counterObserver.unobserve(counter);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(counter => {
+            counterObserver.observe(counter);
+        });
+
+        // Loading screen
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loading').classList.add('hidden');
+            }, 500);
+        });
+
+        // Set minimum date for booking form to today
+        const dateInput = document.getElementById('date');
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.setAttribute('min', today);
+
+        // Parallax effect for hero section
+        let ticking = false;
+        function updateParallax() {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
+        });
+
+        // Dynamic year in footer
+        const currentYear = new Date().getFullYear();
+        document.querySelector('.footer-bottom p').innerHTML = 
+            `&copy; ${currentYear} The Jewels Recreational Center. All rights reserved.`;
+    </script>
+</body>
+</html>
